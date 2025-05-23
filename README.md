@@ -3,6 +3,10 @@
 
 EchoBox is a simple Flask-based anonymous confession and echo system where users can submit messages and receive random ones from others.
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/fc543610-e7e1-4d74-8827-74c6eeeaf732" alt="EchoBox screenshot" />
+</div>
+
 ## Features
 
 - Configurable settings via environment variables.
