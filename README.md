@@ -10,6 +10,23 @@ EchoBox is a simple Flask-based anonymous confession and echo system where users
 - Separate configurations for development, production, and testing.
 - SQLite database by default with option to configure database URL.
 
+## Tech Stack
+
+### Backend
+- **Python**
+- **Flask** – Web framework
+- **Werkzeug** – Session + security middleware
+
+### Frontend
+- **HTML5** – Page structure
+- **CSS3** – Custom styling
+- **Jinja2** – Templating engine
+- **JavaScript** – Light usage (if applicable)
+- **Google Fonts** – Included via CSP headers
+
+### Database
+- **SQLite** – For storing echoes, views, sessions, and analytics
+
 ## Setup
 
 1. **Clone the repository**
