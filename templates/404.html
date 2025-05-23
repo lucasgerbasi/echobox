@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Lost in the Void{% endblock %}
+
+{% block content %}
+<div class="container error-page">
+    <div class="logo">
+        <h1>404</h1>
+        <div class="subtitle">Lost in the void...</div>
+    </div>
+    <div class="error-message">
+        <p>The echo you're looking for has drifted away into the digital ether.</p>
+        <a href="{{ url_for('index') }}" class="btn-link">Return to EchoBox</a>
+    </div>
+</div>
+{% endblock %}

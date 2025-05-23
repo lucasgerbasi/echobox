@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}500 - Void Error{% endblock %}
+
+{% block content %}
+<div class="container error-page">
+    <div class="logo">
+        <h1>500</h1>
+        <div class="subtitle">The void is experiencing technical difficulties...</div>
+    </div>
+    <div class="error-message">
+        <p>Something went wrong while processing your echo. Please try again in a moment.</p>
+        <a href="{{ url_for('index') }}" class="btn-link">Return to EchoBox</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoBox - Anonymous Thoughts Exchange</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">EchoBox</h1>
+            <p class="tagline">Share an anonymous thought. Discover someone else's perspective.</p>
+        </header>
+
+        <main class="main-card">
+            <form method="POST" id="echoForm">
+                <div class="form-group">
+                    <div class="textarea-wrapper">
+                        <textarea
+                            name="echo"
+                            class="main-textarea"
+                            placeholder="What's on your mind? Share your thoughts, dreams, fears, or anything else..."
+                            required
+                            maxlength="500"
+                            id="echoTextarea"
+                        ></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0</span>/500
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <div class="loading-spinner" id="loadingSpinner"></div>
+                    <span id="btnText">Send & Receive Echo</span>
+                </button>
+            </form>
+        </main>
+
+        {% if received_echo %}
+        <div class="echo-response">
+            <div class="echo-header">
+                <h2 class="echo-title">Someone shared with you:</h2>
+            </div>
+            <div class="echo-content">
+                <div class="quote-mark">"</div>
+                <blockquote class="echo-text">{{ received_echo }}</blockquote>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Always Anonymous</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Infinite Stories</span>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Character counter
+        const textarea = document.getElementById('echoTextarea');
+        const charCount = document.getElementById('charCount');
+
+        textarea.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+
+            if (count > 450) {
+                charCount.style.color = '#ef4444';
+            } else if (count > 400) {
+                charCount.style.color = '#f59e0b';
+            } else {
+                charCount.style.color = 'var(--text-muted)';
+            }
+        });
+
+        // Enhanced form submission
+        const form = document.getElementById('echoForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        form.addEventListener('submit', function(e) {
+            // Visual feedback
+            submitBtn.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            btnText.textContent = 'Sending your echo...';
+
+            // Add a subtle animation to the form
+            form.style.opacity = '0.7';
+            form.style.transform = 'scale(0.98)';
+        });
+
+        // Auto-resize textarea
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.max(140, this.scrollHeight) + 'px';
+        });
+
+        // Animate stats counter on load
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            }
+            updateCounter();
+        }
+
+        // Start counter animation when page loads
+        window.addEventListener('load', function() {
+            const totalEchoesElement = document.getElementById('totalEchoes');
+            if (totalEchoesElement) {
+                animateCounter(totalEchoesElement, 1247);
+            }
+        });
+
+        // Add subtle hover effects to interactive elements
+        document.querySelectorAll('.main-card, .echo-response').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                if (document.activeElement === textarea) {
+                    form.submit();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
